@@ -19,7 +19,7 @@ class CreateAgendaTable extends Migration
             $table->string('last_name',150);
             $table->string('number');
             $table->integer('id_user');
-            $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            //$table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
