@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Agenda;
+use App\Models\Photo;
 use Illuminate\Support\Facades\App;
-use App\Http\Controllers\AgendaController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,18 @@ use App\Http\Controllers\AgendaController;
 |
 */
 
-Route::middleware(['auth']) ->group(function (){
+Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
-        $personas = Agenda::all();
-        return view('welcome')->with(['personas' => $personas]);
+        $index = 0;
+        $personas = Agenda::all()->where('id_user', Auth::id());
+        if (sizeof($personas) > 0) {
+            for ($i = 0; $i < sizeof($personas); $i++) {
+                $xd= Photo::where('id_agenda', $personas[$i]->id)->get();
+                $photos[$index] = $xd;
+                $index++;
+            }
+        }
+        return view('welcome')->with(['personas' => $personas, 'imagenes' => $photos]);
     });
 });
 
@@ -29,7 +38,7 @@ Auth::routes();
 
 Route::get('/insert/person', 'App\Http\Controllers\AgendaController@viewInsert')->name('insert');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-Route::get('/person/{id}','App\Http\Controllers\AgendaController@findById')->name('person_update');
+Route::get('/person/{id}', 'App\Http\Controllers\AgendaController@findById')->name('person_update');
 Route::post('/save', 'App\Http\Controllers\AgendaController@insert')->name('save_person');
 Route::post('/delete/{id}/destroy', 'App\Http\Controllers\AgendaController@delete')->name('delete_person');
 Route::post('/update/{id}', 'App\Http\Controllers\AgendaController@update')->name('update_person');

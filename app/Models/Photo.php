@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Agenda extends Model
+class Photo extends Model
 {
     use HasFactory;
 
-    protected $table = 'agenda';
+    protected $table = 'photo';
     protected $primaryKey = 'id';
     public $incrementing = true;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'number',
-        'id_user'
+        'url_photo',
+        'name_photo',
+        'id_agenda'
     ];
 
     protected $guarded = ['id'];
@@ -26,6 +25,6 @@ class Agenda extends Model
 
     public function agenda()
     {
-        return $this->hasMany(Photo::class);
+        return $this->belongsTo(Agenda::class);
     }
 }
