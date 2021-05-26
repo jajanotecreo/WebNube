@@ -490,7 +490,7 @@
                                         @if ($imagenes[$i][$j]->id_agenda == $persona->id)
                                             <li><a href="{{ $imagenes[$i][$j]->url_photo }}">
                                             <img src="{{ $imagenes[$i][$j]->url_photo }}"
-                                            width="50px"/>
+                                            width="100px"/>
                                             </a>
                                             </li>
                                         @endif

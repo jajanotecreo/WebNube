@@ -19,12 +19,13 @@ use Illuminate\Support\Facades\Auth;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
+        $photos = [];
         $index = 0;
         $personas = Agenda::all()->where('id_user', Auth::id());
         if (sizeof($personas) > 0) {
             for ($i = 0; $i < sizeof($personas); $i++) {
-                $xd= Photo::where('id_agenda', $personas[$i]->id)->get();
-                $photos[$index] = $xd;
+                $photo = Photo::where('id_agenda', $personas[$i]->id)->get();
+                $photos[$index] = $photo;
                 $index++;
             }
         }
